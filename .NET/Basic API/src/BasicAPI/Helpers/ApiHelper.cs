@@ -49,20 +49,24 @@ namespace BasicAPI.Helpers
             }
             catch (TaskCanceledException ex) when (ex.InnerException is TimeoutException)
             {
-                logger.LogDebug(ex, $"[{callingMethod}] The request to the {apiName} has timed out");
+                logger.LogError($"[{callingMethod}] The request to the {apiName} has timed out");
+
                 result.StatusCode = StatusCodes.Status504GatewayTimeout;
                 result.ErrorMessage = "Request timed out";
                 result.IsSuccess = false;
             }
             catch (OperationCanceledException ex) //CancellationToken expired
             {
-                logger.LogDebug(ex, $"[{callingMethod}] Request was cancelled by the client");
+                logger.LogError($"[{callingMethod}] Request was cancelled by the client");
+
                 result.StatusCode = StatusCodes.Status499ClientClosedRequest;
                 result.ErrorMessage = "Request was cancelled by the client";
                 result.IsSuccess = false;
             }
             catch (Exception ex)
             {
+                logger.LogError($"[{callingMethod}] An exception occurred while processing a call to the {apiName}: \"{ex.Message}\" - Stack Trace: {ex.StackTrace}");
+
                 result.IsSuccess = false;
                 result.StatusCode = StatusCodes.Status500InternalServerError;
                 result.ErrorMessage = ex.Message;
