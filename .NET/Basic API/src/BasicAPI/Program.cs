@@ -1,17 +1,17 @@
 using System.Diagnostics.CodeAnalysis;
-using MVC_API.Interfaces;
-using MVC_API.Services;
+using BasicAPI.Interfaces;
+using BasicAPI.Services;
 using NLog;
 using NLog.Web;
 
-namespace MVC_API
+namespace BasicAPI
 {
     [ExcludeFromCodeCoverage]
     public class Program
     {
         public static void Main(string[] args)
         {
-            var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+            var logger = LogManager.Setup().LoadConfigurationFromFile("nlog.config").GetCurrentClassLogger();
 
             try
             {

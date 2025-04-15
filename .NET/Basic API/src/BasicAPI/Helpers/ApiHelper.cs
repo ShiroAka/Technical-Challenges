@@ -1,7 +1,6 @@
 ﻿using BasicAPI.Models;
 using System.Diagnostics;
 using System.Text.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BasicAPI.Helpers
 {

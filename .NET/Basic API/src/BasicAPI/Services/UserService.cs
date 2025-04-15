@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BasicAPI.Helpers;
+﻿using BasicAPI.Helpers;
 using BasicAPI.Interfaces;
 using BasicAPI.Models;
-using System.Diagnostics;
 using System.Text.Json;
 
 namespace BasicAPI.Services

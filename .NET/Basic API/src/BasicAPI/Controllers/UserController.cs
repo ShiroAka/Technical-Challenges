@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BasicAPI.Interfaces;
 using BasicAPI.Models;
-using BasicAPI.Services;
 using System.Text.Json;
 
 namespace BasicAPI.Controllers
 {
     [ApiController]
+    [Route("api/users")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -18,7 +18,7 @@ namespace BasicAPI.Controllers
             _logger = logger;
         }
 
-        [HttpGet("users/random")]        
+        [HttpGet("random")]
         public async Task<IActionResult> GetRandomUser(CancellationToken cancellationToken)
         {
             _logger.LogDebug($"[UserController.GetRandomUser] A request was made to get a random user");
@@ -27,10 +27,8 @@ namespace BasicAPI.Controllers
 
             if (result.IsSuccess)
             {
-                string responseJson = JsonSerializer.Serialize(result.Data, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-                _logger.LogDebug($"[UserController.GetRandomUser] The request was completed successfully - Data: {responseJson}");
-
-                return Ok(responseJson);
+                _logger.LogDebug($"[UserController.GetRandomUser] The request was completed successfully");
+                return Ok(result.Data);
             }
             else
             {
@@ -41,7 +39,7 @@ namespace BasicAPI.Controllers
             }
         }
 
-        [HttpPost("users")]
+        [HttpPost]
         public async Task<IActionResult> CreateUser(User user, CancellationToken cancellationToken)
         {
             string inputDataJson = JsonSerializer.Serialize(user, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
@@ -51,10 +49,8 @@ namespace BasicAPI.Controllers
 
             if (result.IsSuccess)
             {
-                string responseJson = JsonSerializer.Serialize(result.Data, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-                _logger.LogDebug($"[UserController.CreateUser] The request was completed successfully - Data: {responseJson}");
-
-                return Ok(responseJson);
+                _logger.LogDebug($"[UserController.CreateUser] The request was completed successfully");
+                return Ok(result.Data);
             }
             else
             {
